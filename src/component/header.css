@@ -1,0 +1,22 @@
+header {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+.mainLogo {
+  width: 150px;
+}
+.logoImg {
+  width: 100%;
+}
+.searchForm {
+  display: flex;
+  width: 300px;
+}
+.searchBox {
+  width: 90%;
+  padding: 0.5rem;
+}
+.searchForm button {
+  width: 10%;
+}

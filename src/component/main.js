@@ -1,77 +1,85 @@
 import './main.css'
 import { useEffect, useState } from "react"
-import axios from "axios"
 import InfiniteScroll from "react-infinite-scroll-component"
 import { typeNameMap, typeColorMap } from './pokemonType'
+import { fetchAllPokemon } from '../services/api'
 
-function Main(){
-  const [pokemonData, setPokemonData] = useState([])
+function Main({searchPokemon}){
+  const [allPokemonData, setAllPokemonData] = useState([]);
+  const [displayPokemonData, setDisplayPokemonData] = useState([]);
+  const [hasMore, setHasMore] = useState(true)
+  const [filterPokemon, setFilterPokemon] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const pokemonPerPage = 76
-  const totalPokemon = 10000
+  const totalPokemon = 1025
 
-  useEffect(()=>{
-    const fetchPokemonData = async () => {
-      const allPokemonData = []
-      const start = (currentPage - 1) * pokemonPerPage + 1
-      const end = Math.min(currentPage * pokemonPerPage, totalPokemon)
+  useEffect(() => {
+    const loadAllPokemonData = async () => {
+      const allData = await fetchAllPokemon(1, totalPokemon);
+      setAllPokemonData(allData);
+      setDisplayPokemonData(allData.slice(0, pokemonPerPage));
+    };
+    loadAllPokemonData();
+  }, []);
 
-      const promise = []
-      for (let i = start; i<=end; i++) {
-        const pokemonPromise = axios.get(`https://pokeapi.co/api/v2/pokemon/${i}`)
-        const speciesPromise = axios.get(`https://pokeapi.co/api/v2/pokemon-species/${i}`)
-        promise.push(Promise.all([pokemonPromise, speciesPromise]))
-      }
-      const results = await Promise.all(promise)
-      console.log(results)
-
-      const fetchedPokemonData = results.map(([pokemonResponse, speciesResponse]) => {
-        const koreanName = speciesResponse.data.names.find((name)=> name.language.name === 'ko')
-        return {
-          ...pokemonResponse.data,
-          korean_name : koreanName ? koreanName.name : pokemonResponse.data.name
-        }
-      })
-      setPokemonData((prevData) => [...prevData, ...fetchedPokemonData])
+  useEffect(() => {
+    if (searchPokemon) {
+      const lowerSearchTerm = searchPokemon.toLowerCase();
+      const filteredData = allPokemonData.filter((pokemon) =>
+        pokemon.korean_name.includes(lowerSearchTerm) || pokemon.name.toLowerCase().includes(lowerSearchTerm)
+      );
+      setFilterPokemon(filteredData);
+      setHasMore(false)
+    } else {
+      setFilterPokemon(displayPokemonData);
+      setHasMore(true)
     }
-    fetchPokemonData()
-  },[currentPage])
+  }, [searchPokemon, allPokemonData, displayPokemonData]);
 
   const fetchMoreData = () => {
-    setCurrentPage((prevPage)=> prevPage + 1)
-  }
-  console.log(pokemonData)
+    const nextPageData = allPokemonData.slice(currentPage * pokemonPerPage, (currentPage + 1) * pokemonPerPage);
+    setDisplayPokemonData((prevData) => [...prevData, ...nextPageData]);
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  
+  
+  console.log(filterPokemon)
+  console.log(searchPokemon)
+  
   return(
     <div>
-      <h3>포켓몬 리스트</h3>
       <InfiniteScroll
-        dataLength={pokemonData.length} // 현재까지 로드된 데이터 수
-        next={fetchMoreData} // 데이터를 추가로 요청하는 함수
-        hasMore={pokemonData.length < totalPokemon} // 모든 데이터를 불러왔는지 여부
+        dataLength={filterPokemon.length}
+        next={fetchMoreData}
+        hasMore={hasMore}
         loader={<h4>데이터 불러오는 중...</h4>}
         endMessage={<h4>모든 데이터를 불러왔습니다!</h4>}
       >
         <ul className="pokemon-box">
-          {pokemonData.map((pokemon, i) => (
-            <li key={i}>
-              <div className='pokemonInfoBox'>
-                <img className='pokemonImg' src={pokemon.sprites.front_default} alt={pokemon.name} />
-                <div className='pokemonName'>
-                  <p className='pokemonNo'>NO.{pokemon.id}</p>
-                  <h3 className='pokemonTitle'>{pokemon.korean_name}</h3>
+          {filterPokemon.map((pokemon, i) => {
+            // console.log(pokemon)
+            return (
+              <li key={i}>
+                <div className='pokemonInfoBox' key={i}>
+                  <img className='pokemonImg' src={pokemon.sprites.front_default} alt={pokemon.name} />
+                  <div className='pokemonName'>
+                    <p className='pokemonNo'>NO.{pokemon.id}</p>
+                    <h3 className='pokemonTitle'>{pokemon.korean_name}</h3>
+                  </div>
                 </div>
-              </div>
-              <div className="pokemonTypeBox"> 
-                {
-                  pokemon.types.map((type, i)=>{
-                    return(
-                      <span className='pokemonType' style={{backgroundColor: typeColorMap[type.type.name]}}>{typeNameMap[type.type.name]}</span>
-                    )
-                  })
-                }
-              </div>
-            </li>
-          ))}
+                <div className="pokemonTypeBox"> 
+                  {
+                    pokemon.types.map((type, i)=>{
+                      return(
+                        <span className='pokemonType' style={{backgroundColor: typeColorMap[type.type.name]}}>{typeNameMap[type.type.name]}</span>
+                      )
+                    })
+                  }
+                </div>
+              </li>
+            )
+          })}
         </ul>
       </InfiniteScroll>
     </div>

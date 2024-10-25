@@ -1,15 +1,17 @@
 import './App.css';
-import { usePokemonData } from './usePokemonData';
 import { Header } from './component/header';
 import Main from './component/main';
+import { useState } from 'react';
 function App() {
-  // const pokemonData = usePokemonData()
+  const [searchPokemon, setSearchPokemon] = useState('')
 
-  // console.log(pokemonData)
+  const search = (pokemon) =>{
+    setSearchPokemon(pokemon)
+  }
   return (
     <div className="App">
-      <Header></Header>
-      <Main></Main>
+      <Header onSearch={search}></Header>
+      <Main searchPokemon={searchPokemon}></Main>
     </div>
   );
 }
