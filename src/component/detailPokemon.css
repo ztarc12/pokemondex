@@ -1,0 +1,62 @@
+.detailPokemonBox {
+  text-align: center;
+  width: 70%;
+  margin: 0 auto;
+}
+.detailPokemonBox > img {
+  width: 30%;
+  height: auto;
+}
+.detailPokemonBox h2 {
+  margin: 1rem;
+}
+.detailPokemonBox>p {
+  font-size: 0.9rem;
+}
+.detailPokemonBoxGrid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  align-items: center;
+  border: 1px solid #ccc;
+  margin: 1rem 0;
+  border-radius: 5px;
+}
+.detailPokemonBoxGrid p {
+  font-size: 0.9rem;
+  padding: 1rem;
+  /* border: 1px solid #eee; */
+  width: 100%;
+}
+.typeBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.typeBox span {
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+.btn-box {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.btn-box button {
+  width: 50%;
+  background: #555;
+  color: #fff;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 5px;
+  transition: 0.5s;
+}
+.btn-box button:hover {
+  background: #222;
+}
+.btn-box button:hover {
+  cursor: pointer;
+}

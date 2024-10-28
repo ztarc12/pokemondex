@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import './header.css'
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 export function Header({ onSearch }){
   const [searchPokemon, setSearchPokemon] = useState('')
@@ -27,8 +29,11 @@ export function Header({ onSearch }){
       </h2>
 
       <form className="searchForm" onSubmit={searchSubmit}>
-        <input type="text" value={searchPokemon} onChange={searchChange} className="searchBox" placeholder="어떤 포켓몬이 궁금한가요?"></input>
-        <button type="submit">검색</button>
+        <img src={process.env.PUBLIC_URL + '/icon_ball.png'}></img>
+        <input type="text" value={searchPokemon} onChange={searchChange} className="searchBox" placeholder="포켓몬 이름을 입력해주세요"></input>
+        <button type="submit">
+          <FontAwesomeIcon icon={faBars} className="icon"/>
+        </button>
       </form>
     </header>
   )

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import InfiniteScroll from "react-infinite-scroll-component"
 import { typeNameMap, typeColorMap } from './pokemonType'
 import { fetchAllPokemon } from '../services/api'
+import { Link } from 'react-router-dom'
 
 function Main({searchPokemon}){
   const [allPokemonData, setAllPokemonData] = useState([]);
@@ -42,8 +43,6 @@ function Main({searchPokemon}){
     setCurrentPage((prevPage) => prevPage + 1);
   };
 
-  
-  
   console.log(filterPokemon)
   console.log(searchPokemon)
   
@@ -54,29 +53,32 @@ function Main({searchPokemon}){
         next={fetchMoreData}
         hasMore={hasMore}
         loader={<h4>데이터 불러오는 중...</h4>}
-        endMessage={<h4>모든 데이터를 불러왔습니다!</h4>}
+        // endMessage={<h4>모든 데이터를 불러왔습니다!</h4>}
+        className='text'
       >
         <ul className="pokemon-box">
           {filterPokemon.map((pokemon, i) => {
             // console.log(pokemon)
             return (
               <li key={i}>
-                <div className='pokemonInfoBox' key={i}>
-                  <img className='pokemonImg' src={pokemon.sprites.front_default} alt={pokemon.name} />
-                  <div className='pokemonName'>
-                    <p className='pokemonNo'>NO.{pokemon.id}</p>
-                    <h3 className='pokemonTitle'>{pokemon.korean_name}</h3>
+                <Link to={`/pokemon/${pokemon.id}`}>
+                  <div className='pokemonInfoBox' key={i}>
+                    <img className='pokemonImg' src={pokemon.sprites.front_default} alt={pokemon.name} />
+                    <div className='pokemonName'>
+                      <p className='pokemonNo'>NO.{pokemon.id}</p>
+                      <h3 className='pokemonTitle'>{pokemon.korean_name}</h3>
+                    </div>
                   </div>
-                </div>
-                <div className="pokemonTypeBox"> 
-                  {
-                    pokemon.types.map((type, i)=>{
-                      return(
-                        <span className='pokemonType' style={{backgroundColor: typeColorMap[type.type.name]}}>{typeNameMap[type.type.name]}</span>
-                      )
-                    })
-                  }
-                </div>
+                  <div className="pokemonTypeBox"> 
+                    {
+                      pokemon.types.map((type, i)=>{
+                        return(
+                          <span className='pokemonType' style={{backgroundColor: typeColorMap[type.type.name]}}>{typeNameMap[type.type.name]}</span>
+                        )
+                      })
+                    }
+                  </div>
+                </Link>
               </li>
             )
           })}

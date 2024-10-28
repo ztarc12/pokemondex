@@ -55,4 +55,34 @@ export const fetchAllPokemon = async (startId, endId) => {
     return []
   }
 }
+export const getDetailedPokemon = async (id) => {
+  try {
+    const pokemonData = await getPokemonByInfo(id)
+    const speciesData = await getPokemonSpecies(id)
+    console.log(pokemonData)
+    console.log(speciesData)
+
+    const koreanName = speciesData.names.find((name)=> name.language.name === 'ko')
+    // const flavorText = speciesData.flavor_text_entries.find((entry) => entry.language.name === 'ko')
+    const flavorTextEntry = speciesData.flavor_text_entries.find(
+      (entry) => entry.language.name === 'ko'
+    );
+    const flavorText = flavorTextEntry ? flavorTextEntry.flavor_text : '추후 업데이트 예정입니다.';
+
+    return {
+      id : pokemonData.id,
+      name : pokemonData.name,
+      korean_name : koreanName ? koreanName.name : pokemonData.name,
+      sprites : pokemonData.sprites.front_default,
+      types : pokemonData.types,
+      height : pokemonData.height,
+      weight : pokemonData.weight,
+      flavor_text : flavorText,
+    }
+
+  } catch (error) {
+    console.error('포켓몬 데이터를 가져오는데 오류가 있습니다.', error)
+    return [];
+  }
+}
 // console.log(fetchAllPokemon())
