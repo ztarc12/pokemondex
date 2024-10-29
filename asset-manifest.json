@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/pokemondex/static/css/main.0a670bc7.css",
+    "main.js": "/pokemondex/static/js/main.02cb2e96.js",
+    "static/js/453.3268d9cf.chunk.js": "/pokemondex/static/js/453.3268d9cf.chunk.js",
+    "index.html": "/pokemondex/index.html",
+    "main.0a670bc7.css.map": "/pokemondex/static/css/main.0a670bc7.css.map",
+    "main.02cb2e96.js.map": "/pokemondex/static/js/main.02cb2e96.js.map",
+    "453.3268d9cf.chunk.js.map": "/pokemondex/static/js/453.3268d9cf.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0a670bc7.css",
+    "static/js/main.02cb2e96.js"
+  ]
+}
