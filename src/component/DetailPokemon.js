@@ -14,7 +14,7 @@ function DetailPokemon(){
   useEffect(()=>{
     const fetchPokemonDetail = async () => {
       const data = await getDetailedPokemon(id)
-      const species = await getPokemonSpecies(id)
+      // const species = await getPokemonSpecies(id)
       setPokemonData(data)
       console.log(data)
     }
@@ -25,9 +25,9 @@ function DetailPokemon(){
 
   if(!pokemonData) return <h4>불러오는 중입니다.</h4>
 
-  const types = pokemonData.types
-  .map((typeInfo) => typeNameMap[typeInfo.type.name] || typeInfo.type.name)
-  .join(', ');
+  // const types = pokemonData.types
+  // .map((typeInfo) => typeNameMap[typeInfo.type.name] || typeInfo.type.name)
+  // .join(', ');
   const prevPokemon = () => {
     const prevId = parseInt(id) - 1;
     navigate(`/pokemon/${prevId}`)

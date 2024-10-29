@@ -60,3 +60,19 @@
 .btn-box button:hover {
   cursor: pointer;
 }
+
+@media (max-width: 990px) {
+  .detailPokemonBox {
+    width: 100%;
+    padding: 1rem;
+  }
+  .detailPokemonBoxGrid p {
+    padding: 0.5rem;
+  }
+  .typeBox span {
+    color: #fff;
+    padding: 3px 5px;
+    border-radius: 5px;
+    margin-right: 5px;
+  }
+}
