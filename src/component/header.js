@@ -29,10 +29,9 @@ export function Header({ onSearch }){
       </h2>
 
       <form className="searchForm" onSubmit={searchSubmit}>
-        <img src={process.env.PUBLIC_URL + '/icon_ball.png'}></img>
         <input type="text" value={searchPokemon} onChange={searchChange} className="searchBox" placeholder="포켓몬 이름을 입력해주세요"></input>
         <button type="submit">
-          <FontAwesomeIcon icon={faBars} className="icon"/>
+          <img src={process.env.PUBLIC_URL + '/icon_ball.png'}></img>
         </button>
       </form>
     </header>
