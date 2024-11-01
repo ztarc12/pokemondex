@@ -53,11 +53,29 @@ header {
   }
   .searchForm {
     width: 100%;
+    border: 1px solid red;
+    /* padding: 0 0.5rem; */
   }
+  
   .searchBox {
     width: 90%;
   }
   .searchForm button {
     width: 10%;
+  }
+}
+@media (max-width: 500px) {
+  .detailPokemonBoxGrid {
+    grid-template-columns: repeat(1,1fr);
+    grid-template-rows: auto-fit;
+  }
+  .searchForm img {
+    margin: 0;
+  }
+  .searchBox {
+    width: 90%;
+  }
+  .searchForm button {
+    width: 15%;
   }
 }

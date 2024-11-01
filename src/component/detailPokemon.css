@@ -4,6 +4,7 @@
   margin: 0 auto;
 }
 .detailPokemonBox > img {
+  margin-top: 1rem;
   width: 30%;
   height: auto;
 }
@@ -24,7 +25,6 @@
 .detailPokemonBoxGrid p {
   font-size: 0.9rem;
   padding: 1rem;
-  /* border: 1px solid #eee; */
   width: 100%;
 }
 .typeBox {
@@ -66,6 +66,7 @@
     width: 100%;
     padding: 1rem;
   }
+  
   .detailPokemonBoxGrid p {
     padding: 0.5rem;
   }
@@ -74,5 +75,12 @@
     padding: 3px 5px;
     border-radius: 5px;
     margin-right: 5px;
+  }
+}
+
+@media (max-width: 500px) {
+  .detailPokemonBoxGrid {
+    grid-template-columns: repeat(1,1fr);
+    grid-template-rows: auto-fit;
   }
 }
