@@ -53,7 +53,7 @@ header {
   }
   .searchForm {
     width: 100%;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     /* padding: 0 0.5rem; */
   }
   
